@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>SecretaryFiller</title>
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem("docfiller_theme") === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <h1>SecretaryFiller</h1>
+      <p id="active-site" class="status-line">
+        <span id="status-dot" class="status-dot"></span>
+        <span id="status-text"></span>
+      </p>
+      <button type="button" id="theme-toggle" class="theme-toggle" title="Switch to light mode" aria-label="Switch to light mode">
+        <span id="theme-toggle-icon" aria-hidden="true">&#9789;</span>
+      </button>
+    </div>
+    <nav>
+      <button type="button" class="tab-btn active" data-tab="event">Fill Event</button>
+      <button type="button" class="tab-btn" data-tab="profile">Profile</button>
+    </nav>
+  </header>
+
+  <section id="tab-event" class="tab-panel active">
+    <details class="profile-dropdown" id="templates-section">
+      <summary>Templates</summary>
+      <label>Load a saved template
+        <select id="template-select">
+          <option value="">— none —</option>
+        </select>
+      </label>
+      <div class="template-actions">
+        <input type="text" id="template-name-input" placeholder="Template name (e.g. GBM)" />
+        <button type="button" id="template-save-btn" class="btn-secondary">Save</button>
+        <button type="button" id="template-delete-btn" class="btn-secondary" hidden>Delete</button>
+      </div>
+    </details>
+
+    <label>Paste event info
+      <span class="hint">Name, date/time, and description all together, in your own words.</span>
+      <textarea
+        id="ev-rawText"
+        rows="4"
+        placeholder="e.g. GBM meeting Monday Oct 6 from 5-7pm at La Casita to go over budget planning for the semester"
+      ></textarea>
+    </label>
+
+    <fieldset>
+      <legend>Parsed (auto-filled — check and edit if needed)</legend>
+      <label>Event Name / Title
+        <input type="text" id="ev-eventName" />
+      </label>
+      <label>Event Date &amp; Time
+        <input type="text" id="ev-eventDateTime" placeholder="e.g. Monday, Oct 6, 2026, 5:00-7:00 PM" />
+      </label>
+      <label>Event Description
+        <textarea id="ev-eventDescription" rows="3"></textarea>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Google Form: reservation request type</legend>
+      <select id="ev-reservationRequestType">
+        <option>Meeting (GBM, Staff Meetings, etc..) Class</option>
+        <option>Presentation/Workshop</option>
+        <option>Special Event/Program</option>
+        <option>Other (please provide specific details in the next 2 sections)</option>
+        <option>Class/ Study Session (3 hour maxiimum)</option>
+      </select>
+    </fieldset>
+
+    <fieldset>
+      <legend>Google Form: space(s) to reserve</legend>
+      <div id="ev-spaceSelections" class="checkbox-list">
+        <label><input type="checkbox" value="Institute of Black Culture (Downstairs Classroom-Capacity 65)" /> IBC Downstairs Classroom (65)</label>
+        <label><input type="checkbox" value="Institute of Black Culture (Upstairs Conference Room-Capacity 10)" /> IBC Upstairs Conference Room (10)</label>
+        <label><input type="checkbox" value="Institute of Black Culture (Upstairs-Living Room)" /> IBC Upstairs Living Room</label>
+        <label><input type="checkbox" value="Hispanic-Latino Cultures (La Casita) (Living Room-Capacity 36)" /> La Casita Living Room (36)</label>
+        <label><input type="checkbox" value="Hispanic-Latino Cultures (La Casita) (Upstairs Classroom- Capacity 77)" /> La Casita Upstairs Classroom (77)</label>
+        <label><input type="checkbox" value="Hispanic-Latino Cultures (La Casita) (Conference Room)" /> La Casita Conference Room</label>
+        <label><input type="checkbox" value="Institutes Shared Courtyard (IBC &IHLC-Capacity 200)" /> Shared Courtyard (200)</label>
+        <label><input type="checkbox" value="Community and Belonging Reitz Union Space 2201 (The Fishbowl-Capacity 49)" /> Reitz Space 2201 / Fishbowl (49)</label>
+        <label><input type="checkbox" value="Community and Belonging Reitz Union Space 2220 (Engagement Space-Capacity 49)" /> Reitz Space 2220 (49)</label>
+      </div>
+    </fieldset>
+
+    <fieldset id="fieldset-ems-only">
+      <legend>EMS: event type</legend>
+      <label>Event Type
+        <select id="ev-emsEventType">
+          <option value="">— select —</option>
+          <option>Add'l Class Meeting</option>
+          <option>Departmental Meeting/Seminar</option>
+          <option>Lecture/Speaker</option>
+          <option>Review Session</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <button type="button" id="fill-btn" class="primary">Fill this page</button>
+    <button type="button" id="template-save-bottom-btn" class="btn-secondary btn-full">Save Template</button>
+    <div id="fill-result"></div>
+  </section>
+
+  <section id="tab-profile" class="tab-panel">
+    <fieldset>
+      <legend>Your contact info</legend>
+      <label>Full Name
+        <input type="text" id="pr-fullName" />
+      </label>
+      <label>Phone Number
+        <input type="text" id="pr-phone" />
+      </label>
+      <label>UFL Email
+        <input type="text" id="pr-uflEmail" />
+      </label>
+    </fieldset>
+
+    <details class="profile-dropdown">
+      <summary>Google Form: reservation basics</summary>
+      <label>This reservation is for
+        <select id="pr-reservationForType">
+          <option>University of Florida Registered Student Organization</option>
+          <option>University Office or Department</option>
+          <option>Individual (Student)</option>
+          <option>Individual (UF Staff/Faculty)</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Student Org / Office / Department name
+        <span class="hint">Also used for "individual or entity" — same answer both places</span>
+        <input type="text" id="pr-orgOrDeptName" />
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="pr-hasPermit" /> I already have an event permit
+      </label>
+      <label>Permit submitter name &amp; email
+        <input type="text" id="pr-submitterNameEmail" />
+      </label>
+    </details>
+
+    <details class="profile-dropdown">
+      <summary>EMS: standard attestations</summary>
+      <p class="hint">1st/2nd Contact info isn't shown here — EMS fills that in automatically from whoever is logged in.</p>
+      <div id="pr-attestations" class="attestation-list"></div>
+    </details>
+
+    <button type="button" id="save-profile-btn" class="primary">Save Profile</button>
+    <div id="save-result"></div>
+  </section>
+
+  <script src="../shared/storage.js"></script>
+  <script src="../shared/parse-event-text.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SecretaryFiller — Privacy Policy</title>
+<style>
+  :root {
+    --ink: #23262f;
+    --ink-dim: #5b5750;
+    --bg: #f4f0e6;
+    --panel: #ffffff;
+    --border: #ded6c4;
+    --accent: #c97c22;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 16px 64px;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 -apple-system, "Segoe UI", system-ui, sans-serif;
+  }
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px 36px 40px;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 0 0 4px;
+  }
+  .updated {
+    color: var(--ink-dim);
+    font-size: 14px;
+    margin: 0 0 28px;
+  }
+  h2 {
+    font-size: 16px;
+    margin: 28px 0 8px;
+    color: var(--accent);
+  }
+  p, li { color: var(--ink); }
+  ul { padding-left: 20px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy Policy for SecretaryFiller</h1>
+  <p class="updated">Last updated: 2026-09-19</p>
+
+  <p>SecretaryFiller is a Chrome extension that autofills two specific university room-reservation forms (a Google Form and the UF EMS Cloud Service room request page).</p>
+
+  <h2>What data this extension collects</h2>
+  <p>None. SecretaryFiller does not collect, transmit, sell, or share any data with anyone — including its own developer. There are no analytics, no error/crash reporting, no remote servers, and no network requests made by the extension itself.</p>
+
+  <h2>What data this extension stores, and where</h2>
+  <p>SecretaryFiller stores the following, entirely inside your own browser via the standard <code>chrome.storage.local</code> API:</p>
+  <ul>
+    <li><strong>Profile information you enter</strong>, such as your name, phone number, UF email, organization/department name, and standard EMS attestation answers.</li>
+    <li><strong>Event details</strong> (event name, date/time, description, room selections) from your most recent fill, so recurring bookings don't require retyping the same information.</li>
+    <li><strong>Saved templates</strong> you create for recurring event types (e.g. "GBM").</li>
+    <li><strong>A light/dark theme preference.</strong></li>
+  </ul>
+  <p>This data is stored locally on your device only. It is never transmitted anywhere — not to the developer, not to any analytics or advertising service, not to any third party. It stays in your browser's local storage until you edit or clear it yourself (or uninstall the extension).</p>
+
+  <h2>What the extension does on the pages it runs on</h2>
+  <p>SecretaryFiller only activates on two specific pages: one designated Google Form and the University of Florida's EMS Cloud Service room-request page. On those pages, it reads the page's field labels to locate the right form fields, and fills in values using the information described above. It never reads or transmits any other content from those pages, and it never submits the form on your behalf — you always review the filled-in fields and click the page's own submit button yourself.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes, the "Last updated" date above will change accordingly.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy can be directed to the developer via the contact information on the Chrome Web Store listing.</p>
+</main>
+</body>
+</html>
